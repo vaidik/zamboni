@@ -15,7 +15,7 @@ To get started, you'll need:
  * MySQL
  * libxml2 (for building lxml, used in tests)
 
-:ref:`OS X <osx-packages>` and :ref:`Ubuntu <ubuntu-packages>` instructions
+:ref:`OS X <osx-packages>`, :ref:`Ubuntu <ubuntu-packages>` and :ref:`Fedora <fedora-packages>` instructions
 follow.
 
 There are a lot of advanced dependencies we're going to skip for a fast start.
@@ -23,6 +23,15 @@ They have their own :ref:`section <advanced-install>`.
 
 If you're on a Linux distro that splits all its packages into ``-dev`` and
 normal stuff, make sure you're getting all those ``-dev`` packages.
+
+
+.. _fedora-packages:
+
+On Fedora
+~~~~~~~~~
+The following command will install the required development packages on Fedora _::
+
+    sudo yum install python-devel python-virtualenv libxml2-devel libxslt-devel mysql-devel libmemcached-devel
 
 
 .. _ubuntu-packages:
@@ -146,6 +155,17 @@ From inside your activated virtualenv, run::
 
 pip installs a few packages into our new virtualenv that we can't distribute in
 ``zamboni-lib``.  These require a C compiler.
+
+Running the above command might throw some erros while install M2Crypto. For
+installing M2Crypto on Fedora, download the source from http://pypi.python.org/
+and extract it.
+
+In file ``<path-to>/M2Crypto-<version>/fedora_setup.sh``, change value of the
+variable ``arch`` from ``uname -m`` to ``uname -i``.
+
+Then run::
+
+    ./fedora_setup.sh install
 
 
 .. _example-settings:
