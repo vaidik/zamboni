@@ -521,7 +521,8 @@ def queue_viewing(request):
         key = '%s:review_viewing:%s' % (settings.CACHE_PREFIX, addon_id)
         currently_viewing = cache.get(key)
         if currently_viewing and currently_viewing != user_id:
-            viewing[addon_id] = currently_viewing
+            viewing[addon_id] = UserProfile.objects.get(
+                                    id=currently_viewing).display_name
 
     return viewing
 
