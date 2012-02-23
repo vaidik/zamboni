@@ -1848,7 +1848,7 @@ form .error .note.error {
 }
 
 .listing .item h3 {
-    float: left;
+    width: 400px;
 }
 
 .html-rtl .listing .item h3 {
