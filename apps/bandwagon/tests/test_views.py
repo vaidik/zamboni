@@ -755,15 +755,27 @@ class AjaxTest(amo.tests.TestCase):
     def test_new_collection(self):
         num_collections = Collection.objects.all().count()
         r = self.client.post(reverse('collections.ajax_new'),
-                {'addon_id': 5299,
-                 'name': 'foo',
-                 'slug': 'auniqueone',
-                 'description': 'yermom',
-                 'listed': True},
-                follow=True)
+                             {'addon_id': 5299,
+                              'name': 'foo',
+                              'slug': 'auniqueone',
+                              'description': 'yermom',
+                              'listed': True},
+                             follow=True)
         doc = pq(r.content)
         eq_(len(doc('li.selected')), 1, "The new collection is not selected.")
         eq_(Collection.objects.all().count(), num_collections + 1)
+
+    def test_new_collection_long_description(self):
+        r = self.client.post(reverse('collections.ajax_new'),
+                             {'addon_id': 5299,
+                              'name': 'foo',
+                              'slug': 'auniqueone',
+                              'description': '1'*250,
+                              'listed': True},
+                             follow=True)
+        self.assertFormError(r, 'form', 'description',
+                                'Ensure this value has at '
+                                'most 200 characters (it has 250).')
 
     def test_add_other_collection(self):
         "403 when you try to add to a collection that isn't yours."
